@@ -21,5 +21,6 @@
 #include "MatrixData.h"
 
 #include "Compute.h"
+#include "MergeSort.h"
 
 #endif

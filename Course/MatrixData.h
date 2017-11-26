@@ -27,8 +27,6 @@ struct MatrixData
 	/*Used for computing matrix size of array*/
 	uint32_t m_matrixArraySize = 0;
 
-
-
 	/*DEPRECATED*/
 	//double *tmp_matrix, *tmp_vector, m = 0.0;
 	//int *_arrayCountOfProcesses, *range;

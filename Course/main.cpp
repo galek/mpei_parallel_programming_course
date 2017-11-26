@@ -2,7 +2,6 @@
 
 //http://www2.sscc.ru/Publikacii/Primery_Prll/Primery.htm
 
-
 //------------------------------------------------------------------------------
 
 int main(int argc, char* argv[])
@@ -20,14 +19,14 @@ int main(int argc, char* argv[])
 
 	// Debug
 	PrintfMatrixData(compute.GetMatrixDataCopy());
-	compute.QSort();
+	//compute.QSort();
+	compute.MergeSort();
 
 	//MPI_Barrier(MPI_COMM_WORLD);
 
 	//compute.startTime = MPI_Wtime();
 
 	//compute.RunGauss();
-
 
 	//MPI_Barrier(MPI_COMM_WORLD); // All threads will wait here until you give thread 0 an input
 
@@ -53,6 +52,8 @@ int main(int argc, char* argv[])
 		printf("\n FINISH! \n");
 	}
 
+	/********** Finalize MPI **********/
+	MPI_Barrier(MPI_COMM_WORLD);
 	MPI_Finalize();
 
 	system("pause");

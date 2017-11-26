@@ -1,7 +1,5 @@
 #pragma once
 
-
-
 struct Compute
 {
 	inline Compute() {}
@@ -22,6 +20,7 @@ struct Compute
 	void Init();
 	void QSort();
 
+	void MergeSort();
 private:
 	void __GenerateMatrix();
 
@@ -29,14 +28,15 @@ private:
 	void __GenerateMatrix_Moc();
 
 public:
-	int g_NumProc;
 
 	double  startTime, time_end, DeltaTime;
-	/*номер процесса*/
+	/*номер процесса world_rank*/
 	int rank_proc = 0;
+	/*world_size*/
+	int g_NumProc = 0;
+
 	/*число процессов*/
 	int size = 0, status;
-
 
 	void SetMatrixData(MatrixData _data) {
 		_mData.Clean();
@@ -50,4 +50,3 @@ public:
 private:
 	MatrixData _mData;
 };
-
