@@ -4,10 +4,12 @@ void Compute::Init()
 {
 	if (rank_proc == 0)
 	{
+#if 1
+		__GenerateMatrix();
+#else
 		// TODO: USED ONLY FOR TESTS
-		//__GenerateMatrix();
 		__GenerateMatrix_Moc();
-
+#endif
 		printf("\n Timer started \n");
 	}
 
@@ -95,3 +97,12 @@ void Compute::MergeSort()
 	}
 }
 
+void TimeData::StartTime()
+{
+	startTime = MPI_Wtime();
+}
+
+void TimeData::EndTime()
+{
+	time_end = MPI_Wtime();
+}

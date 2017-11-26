@@ -28,8 +28,6 @@ private:
 	void __GenerateMatrix_Moc();
 
 public:
-
-	double  startTime, time_end, DeltaTime;
 	/*номер процесса world_rank*/
 	int rank_proc = 0;
 	/*world_size*/
@@ -49,4 +47,15 @@ public:
 
 private:
 	MatrixData _mData;
+};
+
+struct TimeData
+{
+	double  startTime, time_end;
+
+	void StartTime();
+	void EndTime();
+	inline double GetDelta() {
+		return (time_end - startTime);
+	}
 };
