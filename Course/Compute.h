@@ -9,7 +9,7 @@ struct Compute
 	}
 
 	/**/
-	void Init();
+	void Init(bool _loadFromFile);
 	void QSort();
 
 	void MergeSort();

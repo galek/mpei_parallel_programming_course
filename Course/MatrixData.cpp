@@ -1,5 +1,7 @@
 #include "Pch.h"
 
+//m_ElementsInLine= count
+
 MatrixData GenerateMatrixData(uint32_t _count, uint32_t _countOfNodes)
 {
 	MatrixData _newData;
@@ -44,6 +46,17 @@ void PrintfMatrixData(MatrixData _data)
 void PrintfMatrixDataResult(MatrixData _data)
 {
 	for (uint32_t elIt = 0; elIt < _data.GetMatrixArraySize(); elIt++) {
+		
+		// Nick: Вот этого не надо. 
+		/*
+		std::cout << " values: " << elIt << std::endl;
+		
+		if (_data.m_Result == nullptr);
+		{
+			std::cout << " NULL: " << std::endl;
+			return;
+		}*/
+
 		printf((ToString(_data.m_Result[elIt]) + " ").c_str());
 	}
 

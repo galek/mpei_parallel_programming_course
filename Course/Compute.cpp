@@ -3,16 +3,44 @@
 #include <iterator>
 #include <algorithm>
 
-void Compute::Init()
+// Count of elements
+static const uint32_t gCount = 99999999;
+
+//#define USE_MOC_DATA 1
+
+MatrixData ReadFromFile();
+
+void Compute::Init(bool _loadFromFile)
 {
 	if (rank_proc == 0)
 	{
-#if 0
-		__GenerateMatrix();
+		if (_loadFromFile)
+		{
+			MatrixData _dataFromFile = ReadFromFile();
+
+			auto matrixArraySize = _dataFromFile.m_matrixArraySize;
+			/*Result vector after sorting*/
+			_dataFromFile.m_Result = new PFDV[matrixArraySize];
+			/*Result matrix*/
+			for (uint32_t i = 0; i < matrixArraySize; i++) {
+				_dataFromFile.m_Result[i] = PFDV_ZERO;
+			}
+
+			// А вот это тут надо :)
+			// Потребуется для MergeSort
+			_dataFromFile.m_ElementsInLine = _dataFromFile.m_matrixArraySize;
+
+			SetMatrixData(_dataFromFile);
+		}
+		else
+		{
+#ifndef USE_MOC_DATA
+			__GenerateMatrix();
 #else
-		// TODO: USED ONLY FOR TESTS
-		__GenerateMatrix_Moc();
+			// TODO: USED ONLY FOR TESTS
+			__GenerateMatrix_Moc();
 #endif
+		}
 		CopyRawMatrixToResult();
 		printf("\n Timer started \n");
 	}
@@ -26,7 +54,7 @@ void Compute::Init()
 void Compute::__GenerateMatrix()
 {
 	// Generate matrixData
-	auto data = GenerateMatrixData(500, g_NumProc);
+	auto data = GenerateMatrixData(gCount, g_NumProc);
 	SetMatrixData(data);
 }
 
@@ -54,7 +82,7 @@ void Compute::CopyRawMatrixToResult()
 {
 	//void * memcpy ( void * destination, const void * source, size_t num );
 	// Another size variants not works
-	memcpy(_mData.m_Result, _mData.m_Matrix, (sizeof(PFDV)* _mData.m_ElementsInLine));
+	memcpy(_mData.m_Result, _mData.m_Matrix, (sizeof(PFDV)* _mData.m_matrixArraySize));
 
 }
 
@@ -62,7 +90,7 @@ void Compute::QSort()
 {
 	CopyRawMatrixToResult();
 	// sort using the default operator<
-	std::sort(_mData.m_Matrix, _mData.m_Matrix + 11);
+	std::sort(_mData.m_Result, _mData.m_Result + _mData.m_matrixArraySize);
 }
 
 void Compute::MergeSort()

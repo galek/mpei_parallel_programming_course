@@ -55,7 +55,7 @@ void WriteToFile(uint32_t _count, PFDV* matrix)
 	{
 		if (matrix == nullptr)
 		{
-			std::cout << " Error on interator: " << count << std::endl;
+			std::cout << " Error on iterator: " << count << std::endl;
 		}
 		else
 		{
@@ -72,6 +72,8 @@ MatrixData ReadFromFile()
 
 	std::ifstream in_file;
 	in_file.open("numbers.bin", std::ofstream::binary);
+
+	uint32_t _readingCounter = 0;
 
 	if (in_file.fail())
 	{
@@ -92,15 +94,37 @@ MatrixData ReadFromFile()
 
 			// debug only
 			std::cout << values[count] << std::endl;
+			_readingCounter++;
 		}
 
 		data.m_Matrix = values;
 		data.m_matrixArraySize = size;
 	}
 
+
+	std::cout << "Readed " << _readingCounter << " values" << std::endl;
+
 	return data;
 }
 
+
+void SaveFile(Compute& compute, bool _loadFromFile)
+{
+	if (_loadFromFile)
+		return;
+
+	auto dataCopy = compute.GetMatrixDataCopy();
+
+	PrintfMatrixDataResult(dataCopy);
+
+	if (dataCopy.m_Matrix == nullptr)
+	{
+		std::cout << "error. Invalid pointer on  dataCopy.m_Matrix" << std::endl;
+		return;
+	}
+
+	WriteToFile(dataCopy.m_matrixArraySize, dataCopy.m_Matrix);
+}
 
 
 int main(int argc, char* argv[])
@@ -114,32 +138,25 @@ int main(int argc, char* argv[])
 	MPI_Comm_rank(MPI_COMM_WORLD, &compute.rank_proc);
 	MPI_Comm_size(MPI_COMM_WORLD, &compute.g_NumProc);
 
-	compute.Init();
+	bool _loadFromFile = true;
+	compute.Init(_loadFromFile);
 
 	// Debug
-	//PrintfMatrixData(compute.GetMatrixDataCopy());
+	PrintfMatrixData(compute.GetMatrixDataCopy());
 
 	RunMergeSort(compute);
-	RunQSort(compute);
+	//RunQSort(compute);
 
 	// Debug
-	//PrintfMatrixDataResult(compute.GetMatrixDataCopy());
+	PrintfMatrixDataResult(compute.GetMatrixDataCopy());
 
 	/********** Finalize MPI **********/
 	MPI_Barrier(MPI_COMM_WORLD);
 	MPI_Finalize();
 
-	auto dataCopy = compute.GetMatrixDataCopy();
 
-	if (dataCopy.m_Matrix == nullptr)
-	{
-		std::cout << "error. Invalid pointer on  dataCopy.m_Matrix" << std::endl;
-		return;
-	}
+	// IGNORE
+	// SaveFile(compute, _loadFromFile);
 
-	WriteToFile(dataCopy.m_matrixArraySize, dataCopy.m_Matrix);
-
-	//system("pause");
-	//ReadFromFile();
-	//system("pause");
+	system("pause");
 }
