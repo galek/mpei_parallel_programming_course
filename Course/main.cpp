@@ -4,6 +4,23 @@
 
 //------------------------------------------------------------------------------
 
+static void RunMergeSort(Compute& compute)
+{
+	TimeData time;
+	time.StartTime();
+	{
+		compute.MergeSort();
+	}
+	time.EndTime();
+
+	if (compute.rank_proc == 0)
+	{
+		printf("\n FINISH! \n");
+		printf("\n\nTime= %f\n", time.GetDelta());
+	}
+}
+
+
 int main(int argc, char* argv[])
 {
 	setvbuf(stdout, 0, _IONBF, 0);
@@ -19,23 +36,11 @@ int main(int argc, char* argv[])
 
 	// Debug
 	PrintfMatrixData(compute.GetMatrixDataCopy());
-	//compute.QSort();
 
-	TimeData time;
-	time.StartTime();
-	{
-		compute.MergeSort();
-	}
-	time.EndTime();
+	RunMergeSort(compute);
 
 	// Debug
-	PrintfMatrixData(compute.GetMatrixDataCopy());
-
-	if (compute.rank_proc == 0)
-	{
-		printf("\n FINISH! \n");
-		printf("\n\nTime= %f\n", time.GetDelta());
-	}
+	PrintfMatrixDataResult(compute.GetMatrixDataCopy());
 
 	/********** Finalize MPI **********/
 	MPI_Barrier(MPI_COMM_WORLD);

@@ -33,7 +33,8 @@ typedef std::string String;
 
 #endif
 
-#define MT_ARRAY_SIZE( arr ) ( sizeof( arr ) / sizeof( arr)[0] ) )
+#define MT_ARRAY_SIZE( arr ) ( sizeof( arr ) / sizeof( arr)[0] )
+#define MT_ARRAY_SIZE_PTR( arr ) ( sizeof( arr ) / sizeof(*arr) )
 
 
 #endif

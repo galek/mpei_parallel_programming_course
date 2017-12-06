@@ -27,15 +27,10 @@ struct MatrixData
 	/*Used for computing matrix size of array*/
 	uint32_t m_matrixArraySize = 0;
 
-	/*DEPRECATED*/
-	//double *tmp_matrix, *tmp_vector, m = 0.0;
-	//int *_arrayCountOfProcesses, *range;
-
-	//int *NumsMainLines;
-	//int *NumsMainLinesIter;
 	void SetMatrixArraySize(uint32_t matrixArraySize);
 	uint32_t GetMatrixArraySize();
 };
 
 MatrixData GenerateMatrixData(uint32_t _count, uint32_t _countOfNodes);
 void PrintfMatrixData(MatrixData _data);
+void PrintfMatrixDataResult(MatrixData _data);

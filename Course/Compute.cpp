@@ -1,15 +1,19 @@
 #include "Pch.h"
 
+#include <iterator>
+#include <algorithm>
+
 void Compute::Init()
 {
 	if (rank_proc == 0)
 	{
-#if 1
+#if 0
 		__GenerateMatrix();
 #else
 		// TODO: USED ONLY FOR TESTS
 		__GenerateMatrix_Moc();
 #endif
+		CopyRawMatrixToResult();
 		printf("\n Timer started \n");
 	}
 
@@ -46,21 +50,31 @@ void Compute::__GenerateMatrix_Moc()
 	SetMatrixData(data);
 }
 
+void Compute::CopyRawMatrixToResult()
+{
+	//void * memcpy ( void * destination, const void * source, size_t num );
+	// Another size variants not works
+	memcpy(_mData.m_Result, _mData.m_Matrix, (sizeof(PFDV)* _mData.m_ElementsInLine));
+
+}
+
 void Compute::QSort()
 {
+	CopyRawMatrixToResult();
 	// sort using the default operator<
 	std::sort(_mData.m_Matrix, _mData.m_Matrix + 11);
 }
 
 void Compute::MergeSort()
 {
+	CopyRawMatrixToResult();
 	/********** Divide the array in equal-sized chunks **********/
 	auto size = _mData.m_ElementsInLine / g_NumProc;
 
 	/********** Send each subarray to each process **********/
 	PFDV *sub_array = new PFDV[size];
 
-	MPI_Scatter(_mData.m_Matrix, size, MPI_FLOAT, sub_array, size, MPI_FLOAT, 0, MPI_COMM_WORLD);
+	MPI_Scatter(_mData.m_Result, size, MPI_FLOAT, sub_array, size, MPI_FLOAT, 0, MPI_COMM_WORLD);
 
 	//
 	/********** Perform the mergesort on each process **********/
@@ -87,12 +101,12 @@ void Compute::MergeSort()
 		printf("This is the sorted array: ");
 
 		/********** Clean up root **********/
-		auto older = _mData.m_Matrix;
+		auto older = _mData.m_Result;
 
-		_mData.m_Matrix = sorted;
+		_mData.m_Result = sorted;
 
-		delete[]older;
-		delete[]other_array;
+		delete[] older;
+		delete[] other_array;
 
 	}
 }

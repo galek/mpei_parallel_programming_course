@@ -9,14 +9,6 @@ struct Compute
 	}
 
 	/**/
-	void RunGauss()
-	{
-		/*	_ForwardGauss();
-		_BackGauss();
-
-		MPI_Gatherv(tmp_res, range[rank_proc], MPI_DOUBLE, m_Result, range, _arrayCountOfProcesses, MPI_DOUBLE, 0, MPI_COMM_WORLD);*/
-	}
-
 	void Init();
 	void QSort();
 
@@ -27,6 +19,7 @@ private:
 	/*1 processor and 11 elements*/
 	void __GenerateMatrix_Moc();
 
+	void CopyRawMatrixToResult();
 public:
 	/*номер процесса world_rank*/
 	int rank_proc = 0;
