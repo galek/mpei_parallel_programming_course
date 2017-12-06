@@ -6,10 +6,29 @@
 
 static void RunMergeSort(Compute& compute)
 {
+	printf("\n MERGESORT: \n");
 	TimeData time;
 	time.StartTime();
 	{
 		compute.MergeSort();
+	}
+	time.EndTime();
+
+	if (compute.rank_proc == 0)
+	{
+		printf("\n FINISH! \n");
+		printf("\n\nTime= %f\n", time.GetDelta());
+	}
+}
+
+
+static void RunQSort(Compute& compute)
+{
+	printf("\n QSORT: \n");
+	TimeData time;
+	time.StartTime();
+	{
+		compute.QSort();
 	}
 	time.EndTime();
 
@@ -35,12 +54,13 @@ int main(int argc, char* argv[])
 	compute.Init();
 
 	// Debug
-	PrintfMatrixData(compute.GetMatrixDataCopy());
+	//PrintfMatrixData(compute.GetMatrixDataCopy());
 
 	RunMergeSort(compute);
+	RunQSort(compute);
 
 	// Debug
-	PrintfMatrixDataResult(compute.GetMatrixDataCopy());
+	//PrintfMatrixDataResult(compute.GetMatrixDataCopy());
 
 	/********** Finalize MPI **********/
 	MPI_Barrier(MPI_COMM_WORLD);
