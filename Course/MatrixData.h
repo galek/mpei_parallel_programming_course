@@ -12,10 +12,40 @@ struct MatrixData
 		//TRACE_FUNCTION;
 	}
 
+	MatrixData(MatrixData &c) :
+		m_Matrix(c.m_Matrix),
+		m_Result(c.m_Result),
+		m_CountOfStrings(c.m_CountOfStrings),
+		m_ElementsInLine(c.m_ElementsInLine),
+		m_matrixArraySize(c.m_matrixArraySize)
+	{
+	}
+
+	MatrixData& operator=(MatrixData c) {
+
+		m_CountOfStrings = (c.m_CountOfStrings);
+		m_ElementsInLine = (c.m_ElementsInLine);
+		
+		m_Matrix = (c.m_Matrix);
+		m_Result = (c.m_Result);
+
+		m_matrixArraySize = (c.m_matrixArraySize);
+
+		return *this;
+	}
+
+
 	// will called manually
 	inline void Clean() {
+		/*Count of string matrix*/
+		m_CountOfStrings = 0;
+		m_ElementsInLine = 0;
+
 		SAFE_DELETE_ARRAY(m_Matrix);
 		SAFE_DELETE_ARRAY(m_Result);
+
+		/*Used for computing matrix size of array*/
+		m_matrixArraySize = 0;
 	}
 
 	/*Count of string matrix*/

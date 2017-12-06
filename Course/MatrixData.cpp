@@ -8,7 +8,7 @@ MatrixData GenerateMatrixData(uint32_t _count, uint32_t _countOfNodes)
 
 	std::srand(std::time(0)); //use current time as seed for random generator
 
-	auto matrixArraySize = _newData.m_ElementsInLine * _countOfNodes;
+	auto matrixArraySize = _count * _countOfNodes;
 	_newData.SetMatrixArraySize(matrixArraySize);
 	/**/
 	{
