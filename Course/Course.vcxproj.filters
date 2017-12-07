@@ -27,6 +27,9 @@
     <ClCompile Include="MergeSort.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
+    <ClCompile Include="FileOps.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MatrixData.h">
@@ -36,6 +39,9 @@
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="MergeSort.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="FileOps.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>

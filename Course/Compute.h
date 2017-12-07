@@ -9,17 +9,12 @@ struct Compute
 	}
 
 	/**/
-	void Init(bool _loadFromFile);
-	void QSort();
-
-	void MergeSort();
+	void Init();
 private:
 	void __GenerateMatrix();
 
 	/*1 processor and 11 elements*/
 	void __GenerateMatrix_Moc();
-
-	void CopyRawMatrixToResult();
 public:
 	/*номер процесса world_rank*/
 	int rank_proc = 0;

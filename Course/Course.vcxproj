@@ -183,12 +183,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Compute.cpp" />
+    <ClCompile Include="FileOps.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MatrixData.cpp" />
     <ClCompile Include="MergeSort.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Compute.h" />
+    <ClInclude Include="FileOps.h" />
     <ClInclude Include="MatrixData.h" />
     <ClInclude Include="MergeSort.h" />
   </ItemGroup>

@@ -53,3 +53,63 @@ void mergeSort(PFDV *a, PFDV *b, int l, int r)
 		merge(a, b, l, m, r);
 	}
 }
+
+MatrixData ReadFromFile();
+
+void MergeSortImpl(int world_rank, int world_size)
+{
+	auto &data = ReadFromFile();
+	uint32_t n = data.m_matrixArraySize;
+
+	/********** Create and populate the array **********/
+	PFDV *original_array = data.m_Matrix;
+
+	/********** Divide the array in equal-sized chunks **********/
+	uint32_t size = n / world_size;
+
+	/********** Send each subarray to each process **********/
+	PFDV *sub_array = new PFDV[size];
+	MPI_Scatter(original_array, size, MPI_PFDV, sub_array, size, MPI_PFDV, 0, MPI_COMM_WORLD);
+
+	/********** Perform the mergesort on each process **********/
+	PFDV *tmp_array = new PFDV[size];
+	mergeSort(sub_array, tmp_array, 0, (size - 1));
+
+	/********** Gather the sorted subarrays into one **********/
+	PFDV *sorted = NULL;
+	if (world_rank == 0) {
+		sorted = new PFDV[n];
+	}
+
+	MPI_Gather(sub_array, size, MPI_PFDV, sorted, size, MPI_PFDV, 0, MPI_COMM_WORLD);
+
+	/********** Make the final mergeSort call **********/
+	if (world_rank == 0) {
+
+		PFDV *other_array = new PFDV[n];
+		mergeSort(sorted, other_array, 0, (n - 1));
+
+#if DEBUG_SORT
+		/********** Display the sorted array **********/
+		printf("This is the sorted array: ");
+		for (auto c = 0; c < n; c++) {
+
+			printf("%f ", sorted[c]);
+
+		}
+
+		printf("\n");
+		printf("\n");
+#endif // DEBUG_SORT
+
+		/********** Clean up root **********/
+		delete[](sorted);
+		delete[](other_array);
+
+	}
+
+	/********** Clean up rest **********/
+	delete[](original_array);
+	delete[](sub_array);
+	delete[](tmp_array);
+}

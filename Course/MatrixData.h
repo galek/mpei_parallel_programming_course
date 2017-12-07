@@ -59,4 +59,3 @@ struct MatrixData
 
 MatrixData GenerateMatrixData(uint32_t _count, uint32_t _countOfNodes);
 void PrintfMatrixData(MatrixData _data);
-void PrintfMatrixDataResult(MatrixData _data);

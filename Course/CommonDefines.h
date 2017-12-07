@@ -7,6 +7,7 @@
 // PrecFloatDoubleV
 typedef float PFDV;
 #define PFDV_ZERO 0.0f;
+#define MPI_PFDV MPI_FLOAT
 
 typedef std::string String;
 
