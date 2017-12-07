@@ -5,7 +5,6 @@ struct MatrixData
 	inline MatrixData()
 	{
 		m_Matrix = nullptr;
-		m_Result = nullptr;
 	}
 
 	~MatrixData() {
@@ -14,7 +13,6 @@ struct MatrixData
 
 	MatrixData(MatrixData &c) :
 		m_Matrix(c.m_Matrix),
-		m_Result(c.m_Result),
 		m_CountOfStrings(c.m_CountOfStrings),
 		m_matrixArraySize(c.m_matrixArraySize)
 	{
@@ -25,7 +23,6 @@ struct MatrixData
 		m_CountOfStrings = (c.m_CountOfStrings);
 		
 		m_Matrix = (c.m_Matrix);
-		m_Result = (c.m_Result);
 
 		m_matrixArraySize = (c.m_matrixArraySize);
 
@@ -39,7 +36,6 @@ struct MatrixData
 		m_CountOfStrings = 0;
 
 		SAFE_DELETE_ARRAY(m_Matrix);
-		SAFE_DELETE_ARRAY(m_Result);
 
 		/*Used for computing matrix size of array*/
 		m_matrixArraySize = 0;
@@ -49,7 +45,7 @@ struct MatrixData
 	uint32_t m_CountOfStrings = 0;
 
 	/*Matrix pointers for array. Result matrix*/
-	PFDV *m_Matrix = nullptr, *m_Result = nullptr;
+	PFDV *m_Matrix = nullptr;
 	/*Used for computing matrix size of array*/
 	uint32_t m_matrixArraySize = 0;
 

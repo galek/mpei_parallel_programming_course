@@ -37,5 +37,9 @@ typedef std::string String;
 #define MT_ARRAY_SIZE( arr ) ( sizeof( arr ) / sizeof( arr)[0] )
 #define MT_ARRAY_SIZE_PTR( arr ) ( sizeof( arr ) / sizeof(*arr) )
 
+extern bool generateFile;
+extern bool saveFile;
+extern uint32_t countOfEl;
+
 
 #endif

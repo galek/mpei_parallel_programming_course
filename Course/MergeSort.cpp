@@ -55,10 +55,33 @@ void mergeSort(PFDV *a, PFDV *b, int l, int r)
 }
 
 MatrixData ReadFromFile();
+void SaveFile(MatrixData& data);
 
 void MergeSortImpl(int world_rank, int world_size)
 {
-	auto &data = ReadFromFile();
+	MatrixData data;
+
+	if (generateFile)
+	{
+		MatrixData _p;
+		_p.m_matrixArraySize = countOfEl;
+		_p.m_Matrix = new PFDV[_p.m_matrixArraySize];
+
+		srand(time(NULL));
+		for (auto c = 0; c < countOfEl; c++) {
+			_p.m_Matrix[c] = rand() ;
+			//printf("%f ", original_array[c]);
+		}
+
+		data = _p;
+
+		if (saveFile)
+			SaveFile(data);
+	}
+	else {
+		data = ReadFromFile();
+	}
+
 	uint32_t n = data.m_matrixArraySize;
 
 	/********** Create and populate the array **********/
@@ -100,7 +123,7 @@ void MergeSortImpl(int world_rank, int world_size)
 
 		printf("\n");
 		printf("\n");
-#endif // DEBUG_SORT
+#endif // endif
 
 		/********** Clean up root **********/
 		delete[](sorted);

@@ -4,6 +4,10 @@
 
 //http://www2.sscc.ru/Publikacii/Primery_Prll/Primery.htm
 
+bool generateFile = true;
+bool saveFile = true;
+uint32_t countOfEl = 5000;
+
 //------------------------------------------------------------------------------
 
 void MergeSortImpl(int world_rank, int world_size);

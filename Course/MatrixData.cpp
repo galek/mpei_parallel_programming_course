@@ -15,8 +15,6 @@ MatrixData GenerateMatrixData(uint32_t _count, uint32_t _countOfNodes)
 	/**/
 	{
 		_newData.m_Matrix = new PFDV[matrixArraySize];
-		/*Result vector after sorting*/
-		_newData.m_Result = new PFDV[matrixArraySize];
 	}
 
 	/*Fill array*/
@@ -24,12 +22,6 @@ MatrixData GenerateMatrixData(uint32_t _count, uint32_t _countOfNodes)
 		// Using random
 		_newData.m_Matrix[i] = rand();
 	}
-
-	/*Result matrix*/
-	for (uint32_t i = 0; i < matrixArraySize; i++) {
-		_newData.m_Result[i] = PFDV_ZERO;
-	}
-
 
 	return _newData;
 }
@@ -43,25 +35,6 @@ void PrintfMatrixData(MatrixData _data)
 	printf("\n Finished printf \n");
 }
 
-void PrintfMatrixDataResult(MatrixData _data)
-{
-	for (uint32_t elIt = 0; elIt < _data.GetMatrixArraySize(); elIt++) {
-		
-		// Nick: Вот этого не надо. 
-		/*
-		std::cout << " values: " << elIt << std::endl;
-		
-		if (_data.m_Result == nullptr);
-		{
-			std::cout << " NULL: " << std::endl;
-			return;
-		}*/
-
-		printf((ToString(_data.m_Result[elIt]) + " ").c_str());
-	}
-
-	printf("\n Finished printf \n");
-}
 
 void MatrixData::SetMatrixArraySize(uint32_t _matrixArraySize) {
 	m_matrixArraySize = _matrixArraySize;

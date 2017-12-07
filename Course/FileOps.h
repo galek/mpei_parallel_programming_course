@@ -5,4 +5,4 @@
 
 void WriteToFile(uint32_t _count, PFDV* matrix);
 MatrixData ReadFromFile();
-void SaveFile(Compute& compute, bool _loadFromFile);
+void SaveFile(MatrixData& data);

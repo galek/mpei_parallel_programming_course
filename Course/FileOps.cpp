@@ -67,18 +67,13 @@ MatrixData ReadFromFile()
 	return data;
 }
 
-void SaveFile(Compute& compute, bool _loadFromFile)
+void SaveFile(MatrixData& data)
 {
-	if (_loadFromFile)
-		return;
-
-	auto dataCopy = compute.GetMatrixDataCopy();
-
-	if (dataCopy.m_Matrix == nullptr)
+	if (data.m_Matrix == nullptr)
 	{
 		std::cout << "error. Invalid pointer on  dataCopy.m_Matrix" << std::endl;
 		return;
 	}
 
-	WriteToFile(dataCopy.m_matrixArraySize, dataCopy.m_Matrix);
+	WriteToFile(data.m_matrixArraySize, data.m_Matrix);
 }
