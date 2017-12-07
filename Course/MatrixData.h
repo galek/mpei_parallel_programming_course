@@ -16,7 +16,6 @@ struct MatrixData
 		m_Matrix(c.m_Matrix),
 		m_Result(c.m_Result),
 		m_CountOfStrings(c.m_CountOfStrings),
-		m_ElementsInLine(c.m_ElementsInLine),
 		m_matrixArraySize(c.m_matrixArraySize)
 	{
 	}
@@ -24,7 +23,6 @@ struct MatrixData
 	MatrixData& operator=(MatrixData c) {
 
 		m_CountOfStrings = (c.m_CountOfStrings);
-		m_ElementsInLine = (c.m_ElementsInLine);
 		
 		m_Matrix = (c.m_Matrix);
 		m_Result = (c.m_Result);
@@ -39,7 +37,6 @@ struct MatrixData
 	inline void Clean() {
 		/*Count of string matrix*/
 		m_CountOfStrings = 0;
-		m_ElementsInLine = 0;
 
 		SAFE_DELETE_ARRAY(m_Matrix);
 		SAFE_DELETE_ARRAY(m_Result);
@@ -50,7 +47,6 @@ struct MatrixData
 
 	/*Count of string matrix*/
 	uint32_t m_CountOfStrings = 0;
-	uint32_t m_ElementsInLine = 0;
 
 	/*Matrix pointers for array. Result matrix*/
 	PFDV *m_Matrix = nullptr, *m_Result = nullptr;

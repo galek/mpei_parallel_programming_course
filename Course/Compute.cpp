@@ -10,6 +10,20 @@ static const uint32_t gCount = 99999999;
 
 MatrixData ReadFromFile();
 
+
+void SetResultMatrixZero(MatrixData&_dataFromFile)
+{
+	auto old = _dataFromFile.m_Result;
+	/*Result vector after sorting*/
+	_dataFromFile.m_Result = new PFDV[_dataFromFile.m_matrixArraySize];
+	/*Result matrix*/
+	for (uint32_t i = 0; i < _dataFromFile.m_matrixArraySize; i++) {
+		_dataFromFile.m_Result[i] = PFDV_ZERO;
+	}
+
+	SAFE_DELETE(old);
+}
+
 void Compute::Init(bool _loadFromFile)
 {
 	if (rank_proc == 0)
@@ -17,19 +31,8 @@ void Compute::Init(bool _loadFromFile)
 		if (_loadFromFile)
 		{
 			MatrixData _dataFromFile = ReadFromFile();
-
-			auto matrixArraySize = _dataFromFile.m_matrixArraySize;
-			/*Result vector after sorting*/
-			_dataFromFile.m_Result = new PFDV[matrixArraySize];
-			/*Result matrix*/
-			for (uint32_t i = 0; i < matrixArraySize; i++) {
-				_dataFromFile.m_Result[i] = PFDV_ZERO;
-			}
-
-			// А вот это тут надо :)
-			// Потребуется для MergeSort
-			_dataFromFile.m_ElementsInLine = _dataFromFile.m_matrixArraySize;
-
+			SetResultMatrixZero(_dataFromFile);
+			
 			SetMatrixData(_dataFromFile);
 		}
 		else
@@ -86,6 +89,11 @@ void Compute::CopyRawMatrixToResult()
 
 }
 
+void Compute::SetResultZero()
+{
+	SetResultMatrixZero(this->_mData);
+}
+
 void Compute::QSort()
 {
 	CopyRawMatrixToResult();
@@ -97,7 +105,7 @@ void Compute::MergeSort()
 {
 	CopyRawMatrixToResult();
 	/********** Divide the array in equal-sized chunks **********/
-	auto size = _mData.m_ElementsInLine / g_NumProc;
+	auto size = _mData.m_matrixArraySize / g_NumProc;
 
 	/********** Send each subarray to each process **********/
 	PFDV *sub_array = new PFDV[size];
@@ -113,7 +121,7 @@ void Compute::MergeSort()
 	PFDV *sorted = nullptr;
 
 	if (this->rank_proc == 0) {
-		sorted = new PFDV[_mData.m_ElementsInLine];
+		sorted = new PFDV[_mData.m_matrixArraySize];
 	}
 
 	MPI_Gather(sub_array, size, MPI_FLOAT, sorted, size, MPI_FLOAT, 0, MPI_COMM_WORLD);
@@ -121,9 +129,9 @@ void Compute::MergeSort()
 	/********** Make the final mergeSort call **********/
 	if (this->rank_proc == 0) {
 
-		PFDV *other_array = new PFDV[_mData.m_ElementsInLine];
+		PFDV *other_array = new PFDV[_mData.m_matrixArraySize];
 
-		mergeSort(sorted, other_array, 0, (_mData.m_ElementsInLine - 1));
+		mergeSort(sorted, other_array, 0, (_mData.m_matrixArraySize - 1));
 
 		/********** Display the sorted array **********/
 		printf("This is the sorted array: ");

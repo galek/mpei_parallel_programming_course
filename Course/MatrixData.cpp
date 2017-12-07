@@ -6,7 +6,7 @@ MatrixData GenerateMatrixData(uint32_t _count, uint32_t _countOfNodes)
 {
 	MatrixData _newData;
 
-	_newData.m_ElementsInLine = _count;
+	_newData.m_matrixArraySize = _count;
 
 	std::srand(std::time(0)); //use current time as seed for random generator
 

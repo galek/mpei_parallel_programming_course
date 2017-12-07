@@ -18,7 +18,7 @@ static void RunMergeSort(Compute& compute)
 
 	if (compute.rank_proc == 0)
 	{
-		printf("\n FINISH! \n");
+		//printf("\n FINISH! \n");
 		printf("\n\nTime= %f\n", time.GetDelta());
 	}
 }
@@ -36,7 +36,7 @@ static void RunQSort(Compute& compute)
 
 	if (compute.rank_proc == 0)
 	{
-		printf("\n FINISH! \n");
+		//printf("\n FINISH! \n");
 		printf("\n\nTime= %f\n", time.GetDelta());
 	}
 }
@@ -142,13 +142,19 @@ int main(int argc, char* argv[])
 	compute.Init(_loadFromFile);
 
 	// Debug
-	PrintfMatrixData(compute.GetMatrixDataCopy());
+	//PrintfMatrixData(compute.GetMatrixDataCopy());
 
 	RunMergeSort(compute);
-	//RunQSort(compute);
+	// Debug
+	//PrintfMatrixDataResult(compute.GetMatrixDataCopy());
+
+	compute.SetResultZero();
+
+	std::cout << "QSORT" << std::endl << std::endl;
+	RunQSort(compute);
 
 	// Debug
-	PrintfMatrixDataResult(compute.GetMatrixDataCopy());
+	//PrintfMatrixDataResult(compute.GetMatrixDataCopy());
 
 	/********** Finalize MPI **********/
 	MPI_Barrier(MPI_COMM_WORLD);

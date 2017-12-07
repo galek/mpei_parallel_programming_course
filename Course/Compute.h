@@ -40,6 +40,8 @@ public:
 
 private:
 	MatrixData _mData;
+public:
+	void SetResultZero();
 };
 
 struct TimeData
