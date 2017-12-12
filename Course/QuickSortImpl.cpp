@@ -14,10 +14,10 @@ void SaveFile(MatrixData& data);
 
 void QuickSort(PFDV *a, PFDV *out, int l, int r)
 {
-	VAR_UNUSED(out);
-	VAR_UNUSED(l);
-	// sort using the default operator<
-	std::sort(a, a + r);
+	//VAR_UNUSED(out);
+	//VAR_UNUSED(l);
+	//// sort using the default operator<
+	//std::sort(a, a + r);
 }
 
 void QuickSortImpl(int world_rank, int world_size)
@@ -45,22 +45,28 @@ void QuickSortImpl(int world_rank, int world_size)
 		data = ReadFromFile();
 	}
 
-#if 0
 	uint32_t n = data.m_matrixArraySize;
 
 	/********** Create and populate the array **********/
 	PFDV *original_array = data.m_Matrix;
 
 	/********** Divide the array in equal-sized chunks **********/
-	uint32_t size = n / world_size;
+	uint32_t size = n + 1 / world_size;
 
 	/********** Send each subarray to each process **********/
 	PFDV *sub_array = new PFDV[size];
 	MPI_Scatter(original_array, size, MPI_PFDV, sub_array, size, MPI_PFDV, 0, MPI_COMM_WORLD);
 
 	/********** Perform the QuickSort on each process **********/
-	//PFDV *tmp_array = new PFDV[size];
-	QuickSort(sub_array, /*tmp_array*/nullptr, 0, (size - 1));
+	std::vector<PFDV> v;
+	v.resize(size);
+
+	for (int i = 0; i < size; i++)
+	{
+		v[i] = sub_array[i];
+	}
+
+	std::sort(v.begin(), v.end(), std::less<float>());
 
 	/********** Gather the sorted subarrays into one **********/
 	PFDV *sorted = NULL;
@@ -73,15 +79,23 @@ void QuickSortImpl(int world_rank, int world_size)
 	/********** Make the final mergeSort call **********/
 	if (world_rank == 0) {
 
-		//PFDV *other_array = new PFDV[n];
-		QuickSort(sorted, /*other_array*/nullptr, 0, (n - 1));
+		//std::sort(&sorted[0], &sorted[0] + sizeof(PFDV)*(n - 1), std::less<float>());
+
+		std::vector<PFDV> v;
+		v.resize(n);
+
+		for (int i = 0; i < n; i++) {
+			v[i] = sorted[i];
+		}
+		std::sort(v.begin(), v.end(), std::less<float>());
+
 
 		//#if DEBUG_SORT
 				/********** Display the sorted array **********/
 		printf("This is the sorted array: ");
 		for (auto c = 0; c < n; c++) {
 
-			printf("%f ", sorted[c]);
+			printf("%f ", v[c]);
 
 		}
 
@@ -91,7 +105,6 @@ void QuickSortImpl(int world_rank, int world_size)
 
 				/********** Clean up root **********/
 		delete[](sorted);
-		//delete[](other_array);
 
 	}
 
@@ -99,23 +112,4 @@ void QuickSortImpl(int world_rank, int world_size)
 	delete[](original_array);
 	delete[](sub_array);
 	//delete[](tmp_array);
-#else
-	//Parallel Sort
-	{
-		std::vector<PFDV> v;
-		v.resize(data.m_matrixArraySize);
-
-		uint32_t i = 0;
-		for (auto&it : v) {
-			it = data.m_Matrix[i];
-			i++;
-		}
-
-		if (world_rank == 0)
-		{
-			std::cout << "Parallel Sort: " << ClockFunc([&v]() { Concurrency::samples::parallel_sort(v.begin(), v.end()); }) << std::endl;
-		}
-	}
-
-#endif
 }

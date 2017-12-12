@@ -69,7 +69,7 @@ void MergeSortImpl(int world_rank, int world_size)
 
 		srand(time(NULL));
 		for (auto c = 0; c < countOfEl; c++) {
-			_p.m_Matrix[c] = rand() ;
+			_p.m_Matrix[c] = rand();
 			//printf("%f ", original_array[c]);
 		}
 
@@ -88,7 +88,7 @@ void MergeSortImpl(int world_rank, int world_size)
 	PFDV *original_array = data.m_Matrix;
 
 	/********** Divide the array in equal-sized chunks **********/
-	uint32_t size = n / world_size;
+	uint32_t size = n + 1 / world_size;
 
 	/********** Send each subarray to each process **********/
 	PFDV *sub_array = new PFDV[size];
@@ -112,8 +112,8 @@ void MergeSortImpl(int world_rank, int world_size)
 		PFDV *other_array = new PFDV[n];
 		mergeSort(sorted, other_array, 0, (n - 1));
 
-#if DEBUG_SORT
-		/********** Display the sorted array **********/
+		//#if DEBUG_SORT
+				/********** Display the sorted array **********/
 		printf("This is the sorted array: ");
 		for (auto c = 0; c < n; c++) {
 
@@ -123,9 +123,9 @@ void MergeSortImpl(int world_rank, int world_size)
 
 		printf("\n");
 		printf("\n");
-#endif // endif
+		//#endif // endif
 
-		/********** Clean up root **********/
+				/********** Clean up root **********/
 		delete[](sorted);
 		delete[](other_array);
 

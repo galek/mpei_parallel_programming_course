@@ -4,9 +4,9 @@
 
 //http://www2.sscc.ru/Publikacii/Primery_Prll/Primery.htm
 
-bool generateFile = true;
-bool saveFile = true;
-uint32_t countOfEl = 50000000; // 50 000 000
+bool generateFile = false;
+bool saveFile = false;
+uint32_t countOfEl = 11; // 50 000 000
 
 //------------------------------------------------------------------------------
 
@@ -66,6 +66,7 @@ static int main_info(int argc, char* argv[])
 	/********** Finalize MPI **********/
 	MPI_Barrier(MPI_COMM_WORLD);
 	MPI_Finalize();
+	return 0;
 }
 
 static int main_run(int argc, char* argv[])
@@ -87,7 +88,7 @@ static int main_run(int argc, char* argv[])
 
 	// Debug
 	//PrintfMatrixData(compute.GetMatrixDataCopy());
-	RunMergeSort(compute);
+	//RunMergeSort(compute);
 
 	//compute.SetResultZero();
 
@@ -105,6 +106,7 @@ static int main_run(int argc, char* argv[])
 	// SaveFile(compute, _loadFromFile);
 
 	//system("pause");
+	return 0;
 }
 
 
