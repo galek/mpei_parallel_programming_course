@@ -12,6 +12,7 @@ typedef float PFDV;
 typedef std::string String;
 
 #define ToString(x) std::to_string(x)
+#define VAR_UNUSED(x)
 
 #ifndef USE_DEBUG
 #define USE_DEBUG 1

@@ -193,6 +193,7 @@
     <ClInclude Include="FileOps.h" />
     <ClInclude Include="MatrixData.h" />
     <ClInclude Include="MergeSort.h" />
+    <ClCompile Include="QuickSortImpl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CommonDefines.h" />

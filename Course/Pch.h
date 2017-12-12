@@ -23,4 +23,20 @@
 #include "Compute.h"
 #include "MergeSort.h"
 
+bool FileExist();
+
+/// <summary>
+/// Helper function that clocks and returns run times of a function
+/// </summary>
+template<typename Func>
+const float ClockFunc(Func func)
+{
+	TimeData time;
+	time.StartTime();
+	func();
+	time.EndTime();
+
+	return time.GetDelta();
+}
+
 #endif

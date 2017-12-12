@@ -44,7 +44,7 @@ MatrixData ReadFromFile()
 		PFDV size = 0;
 		in_file >> size;
 
-		std::cout << "Reading " << size << " values" << std::endl;
+		//std::cout << "Reading " << size << " values" << std::endl;
 
 		PFDV * values = new PFDV[size];
 
@@ -53,7 +53,8 @@ MatrixData ReadFromFile()
 			in_file >> values[count];
 
 			// debug only
-			std::cout << values[count] << std::endl;
+			//std::cout << values[count] << std::endl;
+
 			_readingCounter++;
 		}
 
@@ -62,7 +63,7 @@ MatrixData ReadFromFile()
 	}
 
 
-	std::cout << "Readed " << _readingCounter << " values" << std::endl;
+	//std::cout << "Readed " << _readingCounter << " values" << std::endl;
 
 	return data;
 }

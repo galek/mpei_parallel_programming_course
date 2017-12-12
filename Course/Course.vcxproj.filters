@@ -44,6 +44,9 @@
     <ClInclude Include="FileOps.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="QuickSortImpl.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CommonDefines.h">
