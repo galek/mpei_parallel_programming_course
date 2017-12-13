@@ -1,24 +1,14 @@
 #include "Pch.h"
 
 
-#include <ppl.h>
 #include <windows.h>
 #include <vector>
 #include <algorithm>
 #include <iostream>
-#include "ppl_extras.h"
 
 
 MatrixData ReadFromFile();
 void SaveFile(MatrixData& data);
-
-void QuickSort(PFDV *a, PFDV *out, int l, int r)
-{
-	//VAR_UNUSED(out);
-	//VAR_UNUSED(l);
-	//// sort using the default operator<
-	//std::sort(a, a + r);
-}
 
 void QuickSortImpl(int world_rank, int world_size)
 {

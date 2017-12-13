@@ -40,8 +40,18 @@ static void RunMergeSort(Compute& compute)
 
 static void RunQSort(Compute& compute)
 {
+	//printf("\n MERGESORT: \n");
+	TimeData time;
+	time.StartTime();
 	{
 		QuickSortImpl(compute.rank_proc, compute.g_NumProc);
+	}
+	time.EndTime();
+
+	if (compute.rank_proc == 0)
+	{
+		//printf("\n FINISH! \n");
+		printf("\n\n quick sort = %f\n", time.GetDelta());
 	}
 }
 
@@ -86,13 +96,7 @@ static int main_run(int argc, char* argv[])
 		printf("\n\n CLUSTER INFO: rank_proc:%i  g_NumProc:%i\n", compute.rank_proc, compute.g_NumProc);
 	}
 
-	// Debug
-	//PrintfMatrixData(compute.GetMatrixDataCopy());
-	//RunMergeSort(compute);
-
-	//compute.SetResultZero();
-
-	//std::cout << "QSORT" << std::endl << std::endl;
+	RunMergeSort(compute);
 	RunQSort(compute);
 	// Debug
 	//PrintfMatrixDataResult(compute.GetMatrixDataCopy());
@@ -101,9 +105,6 @@ static int main_run(int argc, char* argv[])
 	MPI_Barrier(MPI_COMM_WORLD);
 	MPI_Finalize();
 
-
-	// IGNORE
-	// SaveFile(compute, _loadFromFile);
 
 	//system("pause");
 	return 0;
