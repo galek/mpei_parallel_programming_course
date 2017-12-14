@@ -1,0 +1,9 @@
+
+
+ CLUSTER INFO: rank_proc:0  g_NumProc:4
+This is the sorted array: 
+
+ Merge sort = 40.311748
+
+
+ quick sort = 97.910080

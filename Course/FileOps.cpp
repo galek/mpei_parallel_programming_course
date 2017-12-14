@@ -41,7 +41,7 @@ MatrixData ReadFromFile()
 	}
 	else
 	{
-		PFDV size = 0;
+		int size = 0;
 		in_file >> size;
 
 		//std::cout << "Reading " << size << " values" << std::endl;

@@ -1,12 +1,13 @@
 ﻿#include "Pch.h"
 
 #include <fstream>
+#include <sys/stat.h>
 
 //http://www2.sscc.ru/Publikacii/Primery_Prll/Primery.htm
 
-bool generateFile = false;
-bool saveFile = false;
-uint32_t countOfEl = 11; // 50 000 000
+bool generateFile = true;
+bool saveFile = true;
+uint32_t countOfEl = 50000000; // 50 000 000
 
 //------------------------------------------------------------------------------
 
@@ -79,6 +80,8 @@ static int main_info(int argc, char* argv[])
 	return 0;
 }
 
+#include "FileOps.h"
+
 static int main_run(int argc, char* argv[])
 {
 	setvbuf(stdout, 0, _IONBF, 0);
@@ -96,8 +99,33 @@ static int main_run(int argc, char* argv[])
 		printf("\n\n CLUSTER INFO: rank_proc:%i  g_NumProc:%i\n", compute.rank_proc, compute.g_NumProc);
 	}
 
+
+#if 1
+	MatrixData data;
+
+	if (generateFile && FileExist() == false)
+	{
+		MatrixData _p;
+		_p.m_matrixArraySize = countOfEl;
+		_p.m_Matrix = new PFDV[_p.m_matrixArraySize];
+
+		srand(time(NULL));
+		for (auto c = 0; c < countOfEl; c++) {
+			_p.m_Matrix[c] = rand();
+			//printf("%f ", original_array[c]);
+		}
+
+		data = _p;
+
+		if (saveFile)
+			SaveFile(data);
+	}
+
+#else
 	RunMergeSort(compute);
 	RunQSort(compute);
+#endif
+
 	// Debug
 	//PrintfMatrixDataResult(compute.GetMatrixDataCopy());
 

@@ -1,7 +1,5 @@
 #include "Pch.h"
 
-
-#include <windows.h>
 #include <vector>
 #include <algorithm>
 #include <iostream>
@@ -103,7 +101,7 @@ void QuickSortImpl(int world_rank, int world_size)
 
 
 		/********** Display the sorted array **********/
-		printf("This is the sorted array: ");
+		/*printf("This is the sorted array: ");
 		for (auto c = 0; c < n; c++) {
 
 			printf("%f ", res[c]);
@@ -111,7 +109,7 @@ void QuickSortImpl(int world_rank, int world_size)
 		}
 
 		printf("\n");
-		printf("\n");
+		printf("\n");*/
 
 
 		/********** Clean up root **********/

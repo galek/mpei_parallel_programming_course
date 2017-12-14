@@ -135,17 +135,17 @@ void MergeSortImpl(int world_rank, int world_size)
 		//#if DEBUG_SORT
 				/********** Display the sorted array **********/
 		printf("This is the sorted array: ");
-		for (auto c = 0; c < n; c++) {
+		/*	for (auto c = 0; c < n; c++) {
 
-			printf("%f ", sorted[c]);
+				printf("%f ", sorted[c]);
 
-		}
+			}
 
-		printf("\n");
-		printf("\n");
-		//#endif // endif
-
-				/********** Clean up root **********/
+			printf("\n");
+			printf("\n");
+			//#endif // endif
+			*/
+			/********** Clean up root **********/
 		delete[](sorted);
 		delete[](other_array);
 

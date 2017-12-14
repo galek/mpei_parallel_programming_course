@@ -32,13 +32,6 @@ void Compute::Init()
 	MPI_Barrier(MPI_COMM_WORLD);
 }
 
-
-//void Compute::QSort()
-//{
-//	// sort using the default operator<
-//	std::sort(_mData.m_Result, _mData.m_Result + _mData.m_matrixArraySize);
-//}
-
 void TimeData::StartTime()
 {
 	startTime = MPI_Wtime();

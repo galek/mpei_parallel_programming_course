@@ -18,13 +18,13 @@ struct MatrixData
 	{
 	}
 
-	MatrixData& operator=(MatrixData c) {
+	MatrixData& operator=(const MatrixData&c) {
 
-		m_CountOfStrings = (c.m_CountOfStrings);
-		
-		m_Matrix = (c.m_Matrix);
-
-		m_matrixArraySize = (c.m_matrixArraySize);
+		if (&c != this) {
+			m_CountOfStrings = (c.m_CountOfStrings);
+			m_Matrix = (c.m_Matrix);
+			m_matrixArraySize = (c.m_matrixArraySize);
+		}
 
 		return *this;
 	}
