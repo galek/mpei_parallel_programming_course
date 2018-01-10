@@ -100,7 +100,7 @@ static int main_run(int argc, char* argv[])
 	}
 
 
-#if 1
+#if 0 // Generation
 	MatrixData data;
 
 	if (generateFile && FileExist() == false)
