@@ -108,6 +108,9 @@ void MergeSortImpl(int world_rank, int world_size)
 
 	/********** Send each subarray to each process **********/
 	auto size = local_counts[world_rank];
+
+	std::cout << "Size: " << size << std::endl;
+
 	PFDV *sub_array = new PFDV[size];
 
 	// сравни параметры
